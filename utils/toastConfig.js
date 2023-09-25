@@ -1,11 +1,11 @@
 import { Slide, toast } from "react-toastify";
 
-const toastType = ["info", "success", "warning", "danger", "dark"];
+const toastType = ["info", "success", "warning", "error", "default"];
 
 export function toastAlert(type, toastBody, position, toastId) {
   if (toastId) toast.dismiss(toastId.current);
 
-  if (toastType[type]) {
+  if (toastType?.includes(type)) {
     toast[type](toastBody, {
       position,
       toastId,

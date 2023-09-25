@@ -5,14 +5,11 @@ import { useLoginMutation } from "@/lib/redux/auth/authApi";
 import { userLogIn } from "@/lib/redux/auth/authSlice";
 import { size } from "lodash";
 import { useDispatch } from "react-redux";
-import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toastAlert } from "@/utils";
 
 const Login = () => {
-  const pathname = usePathname();
   const [login, { isLoading }] = useLoginMutation();
   const [mutationData, setMutationData] = useState({});
   const dispatch = useDispatch();
@@ -42,94 +39,67 @@ const Login = () => {
           }
         })
         .catch((err) => {
-          toastAlert("danger", err?.data || err?.error, "top-right");
+          toastAlert("error", err?.data || err?.error, "top-right");
         });
     }
   };
 
   return (
-    <section className="py-6 bg-primary h-screen grid place-items-center">
-      <div className="mx-auto max-w-md px-5 lg:px-0">
-        <div>
-          <Image
-            className="h-12 mx-auto"
-            src="/assets/images/avatar.png"
-            alt="Picture of the author"
-            width={100}
-            height={100}
-          />
+    <section className="py-5 container">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-6">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-100">
             Sign in
           </h2>
-        </div>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <input type="hidden" name="remember" value="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
+
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email-address">Email address</label>
               <input
                 id="email-address"
                 name="email"
                 type="email"
                 autoComplete="email"
                 required
-                className="login-input rounded-t-md"
+                className="form-control"
                 placeholder="Email address"
                 onChange={(e) => handleChange("email", e.target.value)}
               />
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
+            <div className="form-group mt-2">
+              <label htmlFor="password">Password</label>
               <input
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
                 required
-                className="login-input rounded-b-md"
+                className="form-control"
                 placeholder="Password"
                 onChange={(e) => handleChange("password", e.target.value)}
               />
             </div>
-          </div>
-
-          <div className="flex items-center justify-end">
-            <div className="text-sm">
-              <Link
-                href={pathname}
-                className="font-medium text-violet-600 hover:text-violet-500"
-              >
-                Forgot your password?
-              </Link>
-            </div>
-          </div>
-
-          <div>
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
+              className="btn mt-4 btn-primary"
             >
               {isLoading ? "Authenticating..." : "Sign in"}
             </button>
-          </div>
+          </form>
 
-          {pathname !== "/admin" && (
-            <p className="text-sm text-center mt-3">
-              Do not have an account?{" "}
-              <span
-                onClick={() => router.push("/register")}
-                className="link-span font-medium text-violet-600 hover:text-violet-500"
-              >
-                Create an account
-              </span>
-            </p>
-          )}
-        </form>
+          <p className="text-sm text-center mt-3">
+            Do not have an account?{" "}
+            <span
+              role="button"
+              tabIndex="0"
+              onClick={() => router.push("/registration")}
+              className="text-decoration-underline cursor-pointer"
+            >
+              Create an account
+            </span>
+          </p>
+        </div>
       </div>
     </section>
   );
