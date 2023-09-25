@@ -18,8 +18,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  console.log("mutationData", mutationData);
-
   const handleChange = (type, value) => {
     setMutationData((prevData) => ({ ...prevData, [type]: value }));
   };
@@ -39,7 +37,6 @@ const Login = () => {
 
           if (accessToken) {
             Cookies.set("accessToken", accessToken, { expires: 7 });
-            Cookies.set("userInfo", result);
             dispatch(userLogIn(result));
             router.push("/");
           }

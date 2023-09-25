@@ -11,7 +11,7 @@ export function toastAlert(type, toastBody, position, toastId) {
       toastId,
     });
   } else {
-    toast(toastBody || "Demo toast", {
+    toast(toastBody || "Default Toast", {
       position,
       toastId,
     });

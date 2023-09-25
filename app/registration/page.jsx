@@ -39,7 +39,6 @@ const StudentRegistration = () => {
 
           if (accessToken) {
             Cookies.set("accessToken", accessToken, { expires: 7 });
-            Cookies.set("userInfo", result);
             dispatch(userLogIn(result));
             router.push("/");
           }
